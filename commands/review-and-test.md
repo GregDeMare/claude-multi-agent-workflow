@@ -1,7 +1,7 @@
 ---
 description: Review every route in course-api in parallel, then write tests for the problems and gaps found
 argument-hint: [optional route file to limit the run, e.g. routes/users.js]
-allowed-tools: Task, Read, Grep, Glob, Bash(npm test:*)
+allowed-tools: Task, Read, Grep, Glob, Bash(npm --prefix course-api test)
 ---
 
 Run this workflow against the API in `course-api/`. If `$ARGUMENTS` names a route file, only work on that file; otherwise cover every file in `course-api/routes/`.
@@ -18,11 +18,11 @@ Then launch a single `multi-agent-workflow:test-writer` subagent and give it tha
 
 ## Step 3 — Run the tests
 
-Once the test-writer has finished, run `npm test` yourself from `course-api/` with Bash, so the result doesn't rest on the subagent's report. Capture the pass and fail counts and the names of any failing tests. Failures that assert correct behavior the app doesn't yet have are expected; don't change application code to fix them.
+Once the test-writer has finished, run `npm --prefix course-api test` yourself with Bash (run from the repo root, with no `cd`), so the result doesn't rest on the subagent's report. Capture the pass and fail counts and the names of any failing tests. Failures that assert correct behavior the app doesn't yet have are expected; don't change application code to fix them.
 
 ## Step 4 — Report
 
 Reply with:
 - the merged review findings, most severe first
-- what the test-writer added and the `npm test` result from Step 3
+- what the test-writer added and the test result from Step 3
 - any suspected application bugs the test-writer reported, left unfixed
